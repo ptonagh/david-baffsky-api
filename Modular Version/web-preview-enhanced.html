@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Recovery Coach - Full App Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+        .iphone-container {
+            max-width: 390px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            background: #000;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        .screen.active {
+            display: block;
+        }
+        .supplement-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+        .supplement-taken {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div class="iphone-container">
+        <!-- Recovery Dashboard Screen -->
+        <div id="recoveryScreen" class="screen active">
+            <!-- Header -->
+            <div class="bg-gray-900 px-6 py-4 pt-12">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold">Recovery Analysis</h1>
+                    <button onclick="refreshData()" class="text-gray-400">
+                        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Recovery Score -->
+            <div class="px-6 py-6">
+                <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-3xl p-6">
+                    <p class="text-white/80 text-sm mb-1">Calculated Recovery</p>
+                    <div class="flex items-baseline">
+                        <span class="text-6xl font-bold" id="recoveryScore">72</span>
+                        <span class="text-2xl text-white/80 ml-1">%</span>
+                    </div>
+                    <p class="text-white/60 text-sm mt-2">Board Confidence: High</p>
+                </div>
+            </div>
+            
+            <!-- Metrics Grid -->
+            <div class="px-6 grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <i data-lucide="moon" class="w-5 h-5 text-blue-400"></i>
+                        <span class="text-xs text-green-500">↑ 5%</span>
+                    </div>
+                    <p class="text-gray-400 text-xs mb-1">Sleep Score</p>
+                    <p class="text-2xl font-bold">85%</p>
+                    <p class="text-xs text-gray-500 mt-1">7-day avg: 82%</p>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <i data-lucide="heart" class="w-5 h-5 text-pink-400"></i>
+                        <span class="text-xs text-green-500">↑ 12%</span>
+                    </div>
+                    <p class="text-gray-400 text-xs mb-1">HRV</p>
+                    <p class="text-2xl font-bold">52 ms</p>
+                    <p class="text-xs text-gray-500 mt-1">30-day avg: 48ms</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advisory Board Screen -->
+        <div id="advisoryScreen" class="screen">
+            <!-- Header -->
+            <div class="bg-gray-900 px-6 py-4 pt-12">
+                <h1 class="text-2xl font-bold">Advisory Board</h1>
+            </div>
+            
+            <!-- Board Consensus -->
+            <div class="px-6 py-6">
+                <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-6">
+                    <h2 class="text-xl font-semibold mb-2">Board Consensus</h2>
+                    <p class="text-white/80 text-sm mb-3">Strong Agreement (72% Recovery)</p>
+                    <p class="text-white">Quality training day with focus on technique refinement. Your HRV indicates good adaptation capacity.</p>
+                </div>
+            </div>
+            
+            <!-- Expert Recommendations -->
+            <div class="px-6 space-y-4">
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center mb-2">
+                        <i data-lucide="user-circle" class="w-10 h-10 text-blue-400 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Dr. Andy Galpin</h3>
+                            <p class="text-xs text-gray-400">Training</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mt-2">Perfect day for power endurance work. Consider 4x4min intervals at 85% with your ACE GG advantage.</p>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center mb-2">
+                        <i data-lucide="user-circle" class="w-10 h-10 text-purple-400 mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold">Dr. Matthew Walker</h3>
+                            <p class="text-xs text-gray-400">Sleep & Recovery</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mt-2">Your 85% sleep score is excellent. Maintain your 10pm bedtime consistency for optimal recovery.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Supplements Screen -->
+        <div id="supplementsScreen" class="screen">
+            <!-- Header -->
+            <div class="bg-gray-900 px-6 py-4 pt-12">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold">Supplements</h1>
+                    <button onclick="showProtocolDetails()" class="text-gray-400">
+                        <i data-lucide="info" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recovery Protocol Card -->
+            <div class="px-6 py-4">
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center">
+                            <i data-lucide="heart" class="w-6 h-6 text-red-500 mr-2"></i>
+                            <h2 class="font-semibold">Today's Protocol</h2>
+                        </div>
+                        <span class="text-2xl font-bold text-green-500">72%</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Good recovery - standard protocol applies</p>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="px-6 grid grid-cols-3 gap-3 mb-6">
+                <button class="bg-gray-900 rounded-xl p-3 text-center">
+                    <i data-lucide="bell" class="w-6 h-6 text-blue-400 mx-auto mb-1"></i>
+                    <span class="text-xs">Reminders</span>
+                </button>
+                <button class="bg-gray-900 rounded-xl p-3 text-center">
+                    <i data-lucide="trending-up" class="w-6 h-6 text-green-400 mx-auto mb-1"></i>
+                    <span class="text-xs">Track</span>
+                </button>
+                <button class="bg-gray-900 rounded-xl p-3 text-center">
+                    <i data-lucide="download" class="w-6 h-6 text-purple-400 mx-auto mb-1"></i>
+                    <span class="text-xs">Export</span>
+                </button>
+            </div>
+            
+            <!-- Daily Schedule -->
+            <div class="px-6">
+                <h3 class="font-semibold mb-4">Daily Schedule</h3>
+                
+                <!-- Time Slots -->
+                <div class="space-y-3">
+                    <!-- 5:45 AM Pre-Workout -->
+                    <div class="supplement-card rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3" onclick="toggleTimeSlot('preworkout')">
+                            <h4 class="font-medium">5:45 AM - Pre-Workout</h4>
+                            <div class="flex items-center">
+                                <span class="text-xs text-gray-400 mr-2">0/3</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div id="preworkout" class="hidden space-y-2 mt-3">
+                            <div class="flex items-center justify-between p-2" onclick="toggleSupplement(this)">
+                                <div class="flex items-center">
+                                    <i data-lucide="zap" class="w-5 h-5 text-yellow-400 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium text-sm">L-Citrulline</p>
+                                        <p class="text-xs text-gray-400">6g • eNOS3 genetic support</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="circle" class="w-5 h-5 text-gray-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2" onclick="toggleSupplement(this)">
+                                <div class="flex items-center">
+                                    <i data-lucide="battery" class="w-5 h-5 text-green-400 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium text-sm">Creatine</p>
+                                        <p class="text-xs text-gray-400">5g • ATP production</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="circle" class="w-5 h-5 text-gray-600"></i>
+                            </div>
+                            <div class="flex items-center justify-between p-2" onclick="toggleSupplement(this)">
+                                <div class="flex items-center">
+                                    <i data-lucide="brain" class="w-5 h-5 text-purple-400 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium text-sm">L-Theanine</p>
+                                        <p class="text-xs text-gray-400">100mg • Calm focus</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="circle" class="w-5 h-5 text-gray-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 10:00 AM Breakfast -->
+                    <div class="supplement-card rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3" onclick="toggleTimeSlot('breakfast')">
+                            <h4 class="font-medium">10:00 AM - Breakfast</h4>
+                            <div class="flex items-center">
+                                <span class="text-xs text-gray-400 mr-2">0/9</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div id="breakfast" class="hidden space-y-2 mt-3">
+                            <!-- Add all breakfast supplements here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Genetic Optimizations -->
+            <div class="px-6 mt-6">
+                <div class="bg-gray-900 rounded-2xl p-4">
+                    <div class="flex items-center mb-3">
+                        <i data-lucide="dna" class="w-6 h-6 text-green-400 mr-2"></i>
+                        <h3 class="font-semibold">Genetic Optimizations</h3>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <i data-lucide="sun" class="w-4 h-4 text-yellow-400 mr-2"></i>
+                            <div>
+                                <span class="text-xs font-medium">CYP24A1 AA</span>
+                                <span class="text-xs text-gray-400 ml-2">5000 IU Vitamin D3</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="heart" class="w-4 h-4 text-red-400 mr-2"></i>
+                            <div>
+                                <span class="text-xs font-medium">ACE GG</span>
+                                <span class="text-xs text-gray-400 ml-2">6g L-Citrulline pre-workout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workout Screen -->
+        <div id="workoutScreen" class="screen">
+            <div class="bg-gray-900 px-6 py-4 pt-12">
+                <h1 class="text-2xl font-bold">Workout</h1>
+            </div>
+            <div class="flex flex-col items-center justify-center h-96">
+                <i data-lucide="dumbbell" class="w-16 h-16 text-gray-600 mb-4"></i>
+                <p class="text-gray-400">Recovery-based training coming soon</p>
+            </div>
+        </div>
+
+        <!-- Nutrition Screen -->
+        <div id="nutritionScreen" class="screen">
+            <div class="bg-gray-900 px-6 py-4 pt-12">
+                <h1 class="text-2xl font-bold">Nutrition</h1>
+            </div>
+            <div class="flex flex-col items-center justify-center h-96">
+                <i data-lucide="apple" class="w-16 h-16 text-gray-600 mb-4"></i>
+                <p class="text-gray-400">Personalised nutrition coming soon</p>
+            </div>
+        </div>
+
+        <!-- Tab Bar -->
+        <div class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800">
+            <div class="max-w-[390px] mx-auto grid grid-cols-5 py-2">
+                <button onclick="switchTab('recovery')" class="tab-btn flex flex-col items-center py-2" data-tab="recovery">
+                    <i data-lucide="heart" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Recovery</span>
+                </button>
+                <button onclick="switchTab('advisory')" class="tab-btn flex flex-col items-center py-2" data-tab="advisory">
+                    <i data-lucide="users" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Advisory</span>
+                </button>
+                <button onclick="switchTab('supplements')" class="tab-btn flex flex-col items-center py-2" data-tab="supplements">
+                    <i data-lucide="pill" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Supplements</span>
+                </button>
+                <button onclick="switchTab('workout')" class="tab-btn flex flex-col items-center py-2" data-tab="workout">
+                    <i data-lucide="dumbbell" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Workout</span>
+                </button>
+                <button onclick="switchTab('nutrition')" class="tab-btn flex flex-col items-center py-2" data-tab="nutrition">
+                    <i data-lucide="apple" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Nutrition</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Current active tab
+        let currentTab = 'recovery';
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(tabName + 'Screen').classList.add('active');
+            
+            // Update tab bar styling
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const icon = btn.querySelector('i');
+                const text = btn.querySelector('span');
+                if (btn.dataset.tab === tabName) {
+                    icon.classList.add('text-indigo-400');
+                    text.classList.add('text-indigo-400');
+                    icon.classList.remove('text-gray-400');
+                    text.classList.remove('text-gray-400');
+                } else {
+                    icon.classList.remove('text-indigo-400');
+                    text.classList.remove('text-indigo-400');
+                    icon.classList.add('text-gray-400');
+                    text.classList.add('text-gray-400');
+                }
+            });
+            
+            currentTab = tabName;
+            lucide.createIcons();
+        }
+        
+        // Toggle time slot expansion
+        function toggleTimeSlot(slotId) {
+            const slot = document.getElementById(slotId);
+            const chevron = slot.previousElementSibling.querySelector('[data-lucide="chevron-down"]');
+            
+            if (slot.classList.contains('hidden')) {
+                slot.classList.remove('hidden');
+                chevron.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                slot.classList.add('hidden');
+                chevron.setAttribute('data-lucide', 'chevron-down');
+            }
+            lucide.createIcons();
+        }
+        
+        // Toggle supplement taken status
+        function toggleSupplement(element) {
+            const circle = element.querySelector('[data-lucide="circle"], [data-lucide="check-circle"]');
+            const content = element.querySelector('div > div');
+            
+            if (circle.getAttribute('data-lucide') === 'circle') {
+                circle.setAttribute('data-lucide', 'check-circle');
+                circle.classList.remove('text-gray-600');
+                circle.classList.add('text-green-500');
+                content.classList.add('supplement-taken');
+                
+                // Update count
+                updateSupplementCount(element.closest('.supplement-card'));
+            } else {
+                circle.setAttribute('data-lucide', 'circle');
+                circle.classList.add('text-gray-600');
+                circle.classList.remove('text-green-500');
+                content.classList.remove('supplement-taken');
+                
+                // Update count
+                updateSupplementCount(element.closest('.supplement-card'));
+            }
+            lucide.createIcons();
+        }
+        
+        // Update supplement count
+        function updateSupplementCount(card) {
+            const total = card.querySelectorAll('[data-lucide="circle"], [data-lucide="check-circle"]').length;
+            const taken = card.querySelectorAll('[data-lucide="check-circle"]').length;
+            const countSpan = card.querySelector('.text-gray-400');
+            countSpan.textContent = `${taken}/${total}`;
+        }
+        
+        // Show protocol details
+        function showProtocolDetails() {
+            alert('Protocol Details:\n\n⚠️ NO iron supplements\n✓ CGM required for berberine\n✓ Creatine cycling: 4 weeks on, 1 off\n✓ Vitamin D target: 50-80 ng/mL');
+        }
+        
+        // Refresh data
+        function refreshData() {
+            const recoveryScore = document.getElementById('recoveryScore');
+            recoveryScore.style.opacity = '0.5';
+            setTimeout(() => {
+                recoveryScore.style.opacity = '1';
+                alert('Data refreshed! (Preview mode)');
+            }, 500);
+        }
+        
+        // Initialize first tab
+        switchTab('recovery');
+    </script>
+</body>
+</html>
